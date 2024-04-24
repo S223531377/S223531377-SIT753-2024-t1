@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    environment {
+        // Define your environment variables here
+        DIRECTORY_PATH = '/path/to/your/code'
+        TESTING_ENVIRONMENT = 'TestEnv'
+        PRODUCTION_ENVIRONMENT = 'YourNameProd'  // Replace 'YourName' with your actual name
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Fetching the source code from the directory path specified by the environment variable: ${DIRECTORY_PATH}'
+                echo 'Compile the code and generate any necessary artifacts'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running unit tests'
+                echo 'Running integration tests'
+            }
+        }
+        stage('Code Quality Check') {
+            steps {
+                echo 'Checking the quality of the code'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy the application to a testing environment specified by the environment variable: ${TESTING_ENVIRONMENT}'
+            }
+        }
+        stage('Approval') {
+            steps {
+                script {
+                    sleep(10) // Pauses the pipeline for 10 seconds to simulate manual approval
+                }
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying the application to production environment: ${PRODUCTION_ENVIRONMENT}'
+            }
+        }
+    }
+}
